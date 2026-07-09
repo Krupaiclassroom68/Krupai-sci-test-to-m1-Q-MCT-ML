@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>ภารกิจพลังงานกับการเปลี่ยนสถานะของสาร V10 | Kru Pai Classroom</title>
+<style>
+  :root{
+    --bg1:#071225; --bg2:#0f315f; --ice:#7de3ff; --fire:#ffb347; --hot:#ff5e7e; --ok:#56e39f; --bad:#ff5a6b; --card:#ffffff; --ink:#10223a; --muted:#5b6b82; --purple:#8b5cf6; --yellow:#ffe066;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;min-height:100%;font-family:"Trebuchet MS","Noto Sans Thai",system-ui,sans-serif;color:var(--ink);background:radial-gradient(circle at 15% 10%,rgba(125,227,255,.35),transparent 25%),radial-gradient(circle at 80% 20%,rgba(255,179,71,.28),transparent 25%),linear-gradient(135deg,var(--bg1),var(--bg2));overflow-x:hidden}
+  body:before{content:"🌡️ 🧊 🔥 💧 ☁️ ⚗️";position:fixed;inset:auto 0 16px 0;text-align:center;font-size:28px;letter-spacing:24px;opacity:.22;pointer-events:none;filter:drop-shadow(0 3px 8px #000)}
+  .screen{display:none;min-height:100vh;padding:22px;align-items:center;justify-content:center;position:relative}.screen.active{display:flex}
+  .wrap{width:min(1120px,100%);margin:auto}.hero,.panel,.game-card{background:rgba(255,255,255,.94);border:4px solid rgba(255,255,255,.7);box-shadow:0 24px 70px rgba(0,0,0,.35);border-radius:32px;padding:28px;position:relative;overflow:hidden}.hero:after,.panel:after,.game-card:after{content:"";position:absolute;inset:-80px -60px auto auto;width:190px;height:190px;border-radius:50%;background:linear-gradient(135deg,rgba(125,227,255,.45),rgba(255,179,71,.35));z-index:0}.content{position:relative;z-index:1}
+  h1{font-size:clamp(34px,5vw,64px);line-height:1.05;margin:8px 0 12px;color:#06172d;text-shadow:0 4px 0 rgba(125,227,255,.45)}h2{font-size:clamp(26px,3vw,40px);margin:0 0 16px}h3{font-size:24px;margin:14px 0 8px}.tag{display:inline-flex;gap:8px;align-items:center;background:linear-gradient(90deg,#ffeb99,#b9f4ff);border-radius:999px;padding:10px 16px;font-weight:900;color:#15304e;border:2px solid #fff}.sub{font-size:20px;color:#334155;line-height:1.6}.brand{position:absolute;top:18px;right:24px;font-weight:900;color:#15304e;background:#fff;border:2px dashed #7de3ff;border-radius:999px;padding:8px 14px;z-index:2}.row{display:flex;gap:14px;flex-wrap:wrap;align-items:center}.grid{display:grid;gap:16px}.grid2{grid-template-columns:repeat(2,minmax(0,1fr))}.grid3{grid-template-columns:repeat(3,minmax(0,1fr))}@media(max-width:760px){.grid2,.grid3{grid-template-columns:1fr}.screen{padding:12px}.hero,.panel,.game-card{padding:18px;border-radius:24px}.brand{position:static;display:inline-block;margin-bottom:8px}}
+  .btn{border:0;border-radius:22px;padding:15px 22px;font-size:20px;font-weight:900;cursor:pointer;color:#071225;background:linear-gradient(135deg,#ffe066,#ffb347);box-shadow:0 8px 0 #c87919,0 14px 24px rgba(0,0,0,.18);transition:.12s transform,.12s filter;touch-action:manipulation}.btn:hover{filter:brightness(1.04)}.btn:active{transform:translateY(4px);box-shadow:0 4px 0 #c87919}.btn.alt{background:linear-gradient(135deg,#9be7ff,#66d9ff);box-shadow:0 8px 0 #1b8db7}.btn.good{background:linear-gradient(135deg,#96f7c6,#49d184);box-shadow:0 8px 0 #1d9861}.btn.bad{background:linear-gradient(135deg,#ff9aaa,#ff5e7e);box-shadow:0 8px 0 #bd2945}.btn.purple{background:linear-gradient(135deg,#cab7ff,#8b5cf6);box-shadow:0 8px 0 #5b35bd;color:white}.btn.small{font-size:16px;padding:10px 14px;border-radius:16px}.btn:disabled{opacity:.45;cursor:not-allowed;filter:grayscale(.5)}
+  input.name,input.answer{width:100%;font-size:24px;padding:16px 18px;border:3px solid #91ddff;border-radius:20px;font-weight:900;text-align:center;outline:none;background:#f9fdff}.answer{max-width:280px}.formula{font-weight:900;color:#0d2b50;background:#ecfbff;border:2px solid #91ddff;padding:10px 13px;border-radius:14px;display:inline-block}.mini-card{background:#f8fbff;border:3px solid #dbeafe;border-radius:22px;padding:16px;box-shadow:0 10px 24px rgba(15,49,95,.1)}.remember{font-size:24px;font-weight:900}.remember b{color:#e11d48}.slide{display:none}.slide.active{display:block}.dots{display:flex;gap:8px;justify-content:center;margin-top:16px}.dot{width:14px;height:14px;border-radius:50%;background:#cbd5e1}.dot.on{background:#ff9f1c;transform:scale(1.2)}
+  .topbar{display:flex;gap:12px;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap}.pill{font-weight:900;background:#fff;border:2px solid #dbeafe;border-radius:999px;padding:9px 14px;color:#15304e}.progress{height:16px;background:#dbeafe;border-radius:999px;overflow:hidden;min-width:180px;flex:1}.progress>div{height:100%;width:0;background:linear-gradient(90deg,#7de3ff,#ffb347,#ff5e7e);transition:.3s}.question{font-size:clamp(24px,3.2vw,38px);font-weight:900;line-height:1.35;margin:16px 0;color:#071225}.options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.option{padding:18px;border-radius:24px;border:3px solid #bfdbfe;background:#fff;font-size:22px;font-weight:900;cursor:pointer;box-shadow:0 7px 0 #c7d2fe;text-align:center;min-height:78px;display:flex;align-items:center;justify-content:center;white-space:pre-line}.option:hover{background:#f0fbff}.option.selected{border-color:#ffb347;background:#fff7d6;transform:translateY(3px);box-shadow:0 4px 0 #d97706}.option.correct{background:#dcfce7;border-color:#22c55e}.option.wrong{background:#ffe4e6;border-color:#fb7185}.option.used{opacity:.35;pointer-events:none}@media(max-width:760px){.options{grid-template-columns:1fr}.option{font-size:20px;min-height:64px}.question{font-size:24px}}
+  .toast{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%) scale(.75);z-index:99;background:#fff;border:5px solid #fff;border-radius:32px;padding:22px 30px;box-shadow:0 24px 80px rgba(0,0,0,.45);font-size:clamp(28px,5vw,54px);font-weight:1000;text-align:center;opacity:0;pointer-events:none}.toast.show{animation:pop 1.05s ease forwards}@keyframes pop{0%{opacity:0;transform:translate(-50%,-50%) scale(.5) rotate(-8deg)}18%{opacity:1;transform:translate(-50%,-50%) scale(1.1) rotate(3deg)}76%{opacity:1;transform:translate(-50%,-50%) scale(1)}100%{opacity:0;transform:translate(-50%,-54%) scale(.9)}}
+  .spark{position:fixed;pointer-events:none;z-index:80;font-size:30px;animation:fly 1s ease-out forwards}@keyframes fly{to{transform:translate(var(--x),var(--y)) rotate(360deg);opacity:0}}.shake{animation:shake .35s}@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}50%{transform:translateX(8px)}75%{transform:translateX(-5px)}}.glow{animation:glow .8s}@keyframes glow{50%{box-shadow:0 0 0 12px rgba(86,227,159,.18),0 24px 70px rgba(86,227,159,.4)}}
+  .seq-area{display:grid;gap:12px}.seq-item{background:#fff;border:3px solid #c7d2fe;border-radius:20px;padding:14px;font-size:20px;font-weight:900;display:flex;gap:10px;align-items:center;justify-content:space-between}.seq-controls{display:flex;gap:8px}.phase-row{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:10px;align-items:center;background:#f8fbff;border:2px solid #dbeafe;border-radius:18px;padding:12px;margin-bottom:10px}.phase-title{font-weight:900;font-size:18px}.select-like{padding:12px;border-radius:16px;border:3px solid #bfdbfe;background:#fff;font-weight:900;font-size:17px;cursor:pointer;text-align:center}.select-like.ok{border-color:#22c55e;background:#dcfce7}.select-like.no{border-color:#fb7185;background:#ffe4e6}.calcbox{display:flex;gap:8px;align-items:center;justify-content:center;flex-wrap:wrap}.calcbox input{width:130px;font-size:22px;padding:9px;border:3px solid #91ddff;border-radius:14px;text-align:center;font-weight:900}.hidden{display:none!important}.keypad{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;max-width:380px;margin:12px auto}.keypad button{font-size:20px;font-weight:900;padding:12px;border:0;border-radius:14px;background:#e0f2fe;box-shadow:0 4px 0 #7dd3fc}.report{line-height:1.7;font-size:18px}.badge{display:inline-block;background:#fff7d6;border:2px solid #fbbf24;border-radius:16px;padding:8px 12px;font-weight:900;margin:4px}.confetti{position:fixed;inset:0;pointer-events:none;z-index:120;overflow:hidden}.confetti span{position:absolute;top:-20px;font-size:24px;animation:fall 2.3s linear forwards}@keyframes fall{to{transform:translateY(110vh) rotate(720deg);opacity:.2}}
+
+  .var-fill{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:14px 0}.var-fill.two{grid-template-columns:repeat(2,minmax(0,1fr))}.varbox{background:#fff;border:3px solid #bfdbfe;border-radius:18px;padding:10px;text-align:center}.varbox b{display:block;font-size:22px;color:#0f315f}.varbox input{width:100%;font-size:22px;font-weight:900;text-align:center;border:3px solid #91ddff;border-radius:14px;padding:8px;margin-top:6px}.subline{font-size:24px;font-weight:1000;background:#f8fbff;border:3px dashed #93c5fd;border-radius:18px;padding:12px;margin:10px 0}.subline span{display:inline-block;min-width:38px;color:#e11d48}.calc-result-row{font-size:26px;font-weight:1000;margin:12px 0}.calc-result-row input{width:150px;font-size:24px;font-weight:900;text-align:center;border:3px solid #91ddff;border-radius:14px;padding:8px}@media(max-width:760px){.var-fill,.var-fill.two{grid-template-columns:1fr}.subline{font-size:20px}}
+
+  .learn-overlay{position:fixed;inset:0;background:rgba(7,18,37,.62);z-index:150;display:flex;align-items:center;justify-content:center;padding:18px}
+  .learn-card{width:min(760px,96vw);max-height:88vh;overflow:auto;background:#fff;border:5px solid #ffe066;border-radius:30px;box-shadow:0 28px 90px rgba(0,0,0,.55);padding:24px;text-align:center}
+  .learn-card h2{margin:0 0 10px;color:#be123c}.learn-exp{background:#f8fbff;border:3px solid #bfdbfe;border-radius:22px;padding:16px;margin:14px 0;font-size:20px;line-height:1.7;text-align:left;font-weight:800;color:#15304e}
+  .learn-tip{display:inline-block;background:#fff7d6;border:2px dashed #f59e0b;border-radius:18px;padding:10px 14px;font-weight:900;margin-top:8px;color:#92400e}
+
+  table{width:100%;border-collapse:separate;border-spacing:0 8px}td,th{padding:10px;background:#f8fbff;border-top:2px solid #dbeafe;border-bottom:2px solid #dbeafe}td:first-child,th:first-child{border-left:2px solid #dbeafe;border-radius:14px 0 0 14px}td:last-child,th:last-child{border-right:2px solid #dbeafe;border-radius:0 14px 14px 0}
+
+  .var-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.var-card{background:#fff;border:3px solid #bae6fd;border-radius:22px;padding:14px;text-align:center;box-shadow:0 8px 18px rgba(15,49,95,.08)}.var-card .sym{font-size:34px;font-weight:1000;color:#0f315f}.var-card .meaning{font-size:18px;font-weight:900}.var-card .unit{display:inline-block;margin-top:6px;background:#fff7d6;border:2px solid #fbbf24;border-radius:999px;padding:5px 9px;font-weight:900}
+  .cycle{display:flex;align-items:stretch;justify-content:center;gap:10px;flex-wrap:wrap;margin:16px 0}.state-box{min-width:155px;flex:1;background:linear-gradient(180deg,#ffffff,#f0fbff);border:3px solid #93c5fd;border-radius:24px;padding:14px;text-align:center;font-weight:1000;font-size:20px;box-shadow:0 9px 0 #bfdbfe}.state-box small{display:block;font-size:15px;color:#475569;margin-top:5px}.arrow-step{align-self:center;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;min-width:118px}.arrow{font-size:34px;font-weight:1000;color:#ff7a00;text-shadow:0 3px 0 #ffe8a3;line-height:1}.formula-chip{display:inline-block;background:#ecfbff;border:3px solid #67e8f9;border-radius:999px;padding:7px 12px;font-weight:1000;color:#0f315f;box-shadow:0 5px 0 #bae6fd;text-align:center}.formula-chip.temp{background:#e0f2fe;border-color:#38bdf8}.formula-chip.latent{background:#fff7ed;border-color:#fb923c}.formula-chip.wait{background:#f8fafc;border-color:#cbd5e1;color:#64748b}.route-note{font-size:15px;font-weight:900;color:#475569;text-align:center}.route-preview{background:#f8fbff;border:3px dashed #93c5fd;border-radius:24px;padding:12px;margin:8px 0 14px}@media(max-width:760px){.var-grid{grid-template-columns:1fr 1fr}.cycle{display:grid;grid-template-columns:1fr}.arrow-step{min-width:auto}.arrow{transform:rotate(90deg);text-align:center}.state-box{min-width:auto}}
+
+  .stage-menu{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:16px}
+  .stage-card{background:linear-gradient(180deg,#ffffff,#f0fbff);border:3px solid #bae6fd;border-radius:24px;padding:18px;text-align:left;box-shadow:0 8px 0 #bfdbfe;cursor:pointer;transition:.12s transform,.12s filter;font-weight:900}
+  .stage-card:hover{filter:brightness(1.03);transform:translateY(-2px)}
+  .stage-card h3{margin:0 0 6px;font-size:24px;color:#0f315f}.stage-card p{margin:0;color:#475569;line-height:1.45}.stage-status{display:inline-block;margin-top:10px;border-radius:999px;padding:7px 11px;background:#fff7d6;border:2px solid #fbbf24;color:#92400e;font-weight:1000}.stage-status.pass{background:#dcfce7;border-color:#22c55e;color:#166534}.stage-status.fail{background:#ffe4e6;border-color:#fb7185;color:#9f1239}
+  .big-circuit .cycle{gap:14px}.big-circuit .state-box{font-size:22px;min-width:170px}.big-circuit .arrow-step{min-width:190px;background:#ffffff;border:3px dashed #bae6fd;border-radius:24px;padding:12px;box-shadow:0 8px 20px rgba(15,49,95,.08)}
+  .tiny-form{width:min(360px,94vw);margin-top:8px}.tiny-form .var-fill{grid-template-columns:repeat(3,1fr);gap:6px;margin:6px 0}.tiny-form .var-fill.two{grid-template-columns:repeat(2,1fr)}.tiny-form .varbox{padding:6px;border-width:2px}.tiny-form .varbox b{font-size:17px}.tiny-form .varbox small{display:none}.tiny-form .varbox input{font-size:18px;padding:6px}.tiny-form .subline{font-size:18px;padding:8px;margin:6px 0}.tiny-form .calc-result-row{font-size:18px;margin:6px 0}.tiny-form .calc-result-row input{width:105px;font-size:18px;padding:6px}
+  .sumline{font-size:30px;font-weight:1000;text-align:center;background:#fff7d6;border:4px solid #fbbf24;border-radius:24px;padding:16px;margin:16px auto;max-width:620px}
+  .route-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.route-option{border:3px solid #bfdbfe;background:#fff;border-radius:24px;padding:18px;font-size:20px;font-weight:1000;cursor:pointer;box-shadow:0 7px 0 #c7d2fe;line-height:1.45}.route-option.correct{background:#dcfce7;border-color:#22c55e}.route-option.wrong{background:#ffe4e6;border-color:#fb7185}
+  .formula-popup{position:fixed;inset:0;background:rgba(7,18,37,.62);z-index:200;display:flex;align-items:center;justify-content:center;padding:16px}.formula-popup-card{width:min(720px,96vw);background:#fff;border:5px solid #fff;border-radius:30px;padding:22px;box-shadow:0 26px 90px rgba(0,0,0,.45);text-align:center}
+  @media(max-width:760px){.stage-menu,.route-options{grid-template-columns:1fr}.big-circuit .cycle{display:grid;grid-template-columns:1fr}.big-circuit .arrow-step{min-width:auto}.tiny-form{width:100%}.tiny-form .var-fill,.tiny-form .var-fill.two{grid-template-columns:1fr}.sumline{font-size:23px}}
+
+  .sacred-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin:16px 0}.sacred-card{background:linear-gradient(180deg,#fff,#f0fbff);border:4px solid #bae6fd;border-radius:24px;padding:14px;text-align:center;box-shadow:0 9px 0 #bfdbfe;font-weight:1000}.sacred-card .emoji{font-size:38px}.sacred-card .val{font-size:clamp(26px,4vw,42px);color:#e11d48}.sacred-card small{display:block;color:#475569;font-size:15px}.full-cycle-box{background:#f8fbff;border:4px dashed #93c5fd;border-radius:28px;padding:16px;margin-top:12px}.review-palette{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:12px 0}.review-token{border:0;border-radius:999px;padding:12px 18px;font-weight:1000;font-size:18px;cursor:pointer;box-shadow:0 6px 0 #94a3b8;background:#fff}.review-token.selected{background:#fff7d6;transform:translateY(3px);box-shadow:0 3px 0 #d97706}.review-slot{min-width:132px;min-height:58px;border:3px dashed #94a3b8;border-radius:18px;background:#fff;font-weight:1000;cursor:pointer;padding:8px 10px;display:flex;align-items:center;justify-content:center;text-align:center}.review-slot.filled{border-style:solid;border-color:#f59e0b;background:#fff7ed}.review-slot.correct{border-color:#22c55e;background:#dcfce7}.review-slot.wrong{border-color:#fb7185;background:#ffe4e6}.cycle .arrow-step .review-slot{margin-top:6px}.review-check{margin-top:14px;text-align:center}.tiny-note{font-size:14px;font-weight:900;color:#475569}@media(max-width:900px){.sacred-grid{grid-template-columns:1fr 1fr}.sacred-grid .sacred-card:last-child{grid-column:1/-1}}
+</style>
+</head>
+<body>
+<div id="toast" class="toast"></div><div id="confetti" class="confetti"></div>
+
+<section id="start" class="screen active"><div class="wrap hero"><div class="brand">Kru Pai Classroom</div><div class="content">
+  <span class="tag">🔥 ENERGY PHASE CHANGE MISSION 🧊</span>
+  <h1>ภารกิจพลังงาน<br>กับการเปลี่ยนสถานะของสาร</h1>
+  <p class="sub">เริ่มจากเข้าใจ <b>การเปลี่ยนสถานะของสาร</b> แล้วพาไปฝึก <b>ทฤษฎี + เลือกสูตร + คำนวณ</b> โดยใช้หน่วยที่เด็กใช้บ่อยที่สุด: <b>cal, g, °C</b><br>จำค่า C ของน้ำ และค่าความร้อนแฝง ก่อนพิชิตโจทย์หลายช่วง Q1 Q2 Q3</p>
+  <div class="grid grid2">
+    <div class="mini-card"><h3>🎮 ด่านในเกม</h3><p>1) จำค่าคงที่<br>2) เลือกสูตรให้ตรง<br>3) คำนวณช่วงเดียว<br>4) เลือกเส้นทางการเปลี่ยนสถานะ<br>5) ใส่สูตรใต้ลูกศร เติมตัวเลข แล้วรวมพลังงาน</p></div>
+    <div class="mini-card"><h3>🧠 กติกา</h3><p>ต้องเลือกสูตรก่อนเสมอ ถ้าเลือกถูกจึงเปิดช่องคำนวณ เด็กจะไม่เดาสูตรข้ามขั้นตอนจ้า ✨</p></div>
+  </div>
+  <div style="height:16px"></div>
+  <input id="playerName" class="name" placeholder="พิมพ์ชื่อผู้เล่น / ชื่อเล่น" autocomplete="off" />
+  <div style="height:16px"></div>
+  <button class="btn" onclick="startReview()">เริ่มทบทวนก่อนเล่น 🚀</button>
+</div></div></section>
+
+<section id="review" class="screen"><div class="wrap panel"><div class="content">
+  <div class="topbar"><span class="tag">📘 หน้าทบทวน</span><button class="btn small alt" onclick="goStart()">กลับหน้าแรก</button></div>
+  <div id="slides">
+
+    <div class="slide active"><h2>1) เกมนี้เรียนเรื่องอะไร?</h2><p class="sub">เกมนี้พาเด็กเข้าใจว่า <b>สารเปลี่ยนสถานะได้เมื่อได้รับหรือคายพลังงานความร้อน</b> เช่น น้ำแข็งละลายเป็นน้ำ น้ำเดือดเป็นไอน้ำ หรือไอน้ำควบแน่นกลับเป็นน้ำ</p><div class="grid grid2"><div class="mini-card remember">🔥 ได้รับความร้อน<br><b>อนุภาคเคลื่อนที่มากขึ้น</b><p class="sub" style="font-size:17px;margin:8px 0 0">ของแข็ง → ของเหลว → แก๊ส</p></div><div class="mini-card remember">❄️ คายความร้อน<br><b>อนุภาคเคลื่อนที่น้อยลง</b><p class="sub" style="font-size:17px;margin:8px 0 0">แก๊ส → ของเหลว → ของแข็ง</p></div></div><div class="cycle"><div class="state-box">🧊 น้ำแข็ง<small>ของแข็ง</small></div><div class="arrow-step"><div class="arrow">➡</div><span class="formula-chip latent">หลอมเหลว</span><div class="route-note">รับความร้อน</div></div><div class="state-box">💧 น้ำ<small>ของเหลว</small></div><div class="arrow-step"><div class="arrow">➡</div><span class="formula-chip latent">กลายเป็นไอ</span><div class="route-note">รับความร้อน</div></div><div class="state-box">☁️ ไอน้ำ<small>แก๊ส</small></div></div><p class="sub">ก่อนคำนวณ เราต้องแยกให้ได้ก่อนว่า ช่วงนั้นเป็น <b>อุณหภูมิเปลี่ยน</b> หรือ <b>สถานะเปลี่ยน</b></p></div>
+    <div class="slide"><h2>2) จากทฤษฎี → สู่การคำนวณ</h2><p class="sub">การเปลี่ยนแปลงของสารมี 2 แบบใหญ่ ๆ และแต่ละแบบใช้สูตรไม่เหมือนกัน</p><div class="grid grid2"><div class="mini-card"><h3>🌡️ แบบที่ 1: อุณหภูมิเปลี่ยน</h3><p class="sub">สารยังเป็นสถานะเดิม เช่น น้ำ 25°C → น้ำ 100°C หรือ น้ำแข็ง -10°C → น้ำแข็ง 0°C</p><h2 class="formula">Q = mcΔt</h2></div><div class="mini-card"><h3>🧊 แบบที่ 2: สถานะเปลี่ยน</h3><p class="sub">อุณหภูมิอาจคงที่ แต่สถานะเปลี่ยน เช่น น้ำแข็ง 0°C → น้ำ 0°C หรือ น้ำ 100°C → ไอน้ำ 100°C</p><h2 class="formula">Q = mL</h2></div></div><div class="mini-card" style="margin-top:14px"><h3>🧠 คิดเป็นขั้น</h3><p class="sub">1) ดูลูกศรว่าเกิดอะไรขึ้น → 2) เลือกสูตรให้ตรง → 3) แทนค่า → 4) ถ้ามีหลายช่วง ให้บวก Q1 + Q2 + Q3</p></div></div>
+    <div class="slide"><h2>3) หน่วยที่ใช้ในเกมนี้</h2><p class="sub">ใช้ระบบที่เด็กเจอบ่อย: <b>cal, g, °C</b> โดยโจทย์จะให้มวลเป็น <b>กรัม</b> จึงแทนค่าได้เลย ไม่ต้องแปลงหน่วย</p><div class="grid grid3"><div class="mini-card remember">Q = พลังงาน<br><b>cal</b></div><div class="mini-card remember">m = มวล<br><b>g</b></div><div class="mini-card remember">Δt = อุณหภูมิที่เปลี่ยน<br><b>°C</b></div></div></div>
+    <div class="slide"><h2>4) ความหมายของตัวแปรในสูตร</h2><p class="sub">ก่อนคำนวณต้องอ่าน “ภาษาสูตร” ให้เข้าใจก่อนนะจ๊ะ</p><div class="var-grid"><div class="var-card"><div class="sym">Q</div><div class="meaning">พลังงานความร้อน</div><span class="unit">cal</span></div><div class="var-card"><div class="sym">m</div><div class="meaning">มวลของสาร</div><span class="unit">g</span></div><div class="var-card"><div class="sym">c</div><div class="meaning">ความร้อนจำเพาะ</div><span class="unit">cal/g°C</span></div><div class="var-card"><div class="sym">L</div><div class="meaning">ความร้อนแฝง</div><span class="unit">cal/g</span></div></div><div class="mini-card" style="margin-top:14px"><b>Δt อ่านว่า เดลตา t</b> หมายถึง อุณหภูมิที่เปลี่ยนไป = อุณหภูมิสุดท้าย - อุณหภูมิเริ่มต้น เช่น 30°C → 100°C ได้ Δt = 70°C</div></div>
+    <div class="slide"><h2>5) ค่าศักดิ์สิทธิ์ 5 ค่า ต้องจำให้เห็นชัด</h2><p class="sub">บทนี้ถ้าจำค่าเหล่านี้ได้ เด็กจะคำนวณได้ลื่นมากขึ้น ไม่ต้องไปหาในตัวอย่างจ้า</p><div class="sacred-grid"><div class="sacred-card"><div class="emoji">🧊</div><small>c ของน้ำแข็ง</small><div class="val">0.5</div><small>cal/g°C</small></div><div class="sacred-card"><div class="emoji">💧</div><small>c ของน้ำ</small><div class="val">1</div><small>cal/g°C</small></div><div class="sacred-card"><div class="emoji">☁️</div><small>c ของไอน้ำ</small><div class="val">0.48</div><small>cal/g°C</small></div><div class="sacred-card"><div class="emoji">🔥</div><small>Lf หลอมเหลว/แข็งตัว</small><div class="val">80</div><small>cal/g</small></div><div class="sacred-card"><div class="emoji">⚡</div><small>Lv กลายเป็นไอ/ควบแน่น</small><div class="val">540</div><small>cal/g</small></div></div><p class="sub"><b>จำสั้น ๆ:</b> น้ำแข็ง 0.5 | น้ำ 1 | ไอน้ำ 0.48 | น้ำแข็ง↔น้ำ 80 | น้ำ↔ไอน้ำ 540</p></div>
+    <div class="slide"><h2>6) วงจรเต็มทั้งระบบ: จากน้ำแข็งติดลบถึงไอน้ำ</h2><p class="sub">ให้เด็กกดเลือกสูตรไปใส่ใต้ลูกศรเอง แล้วตรวจว่าแต่ละช่วงใช้สูตรถูกหรือไม่</p><div class="review-palette"><button class="review-token" onclick="pickReviewFormula(this,'Q = mcΔt')">Q = mcΔt<br><span class="tiny-note">อุณหภูมิเปลี่ยน</span></button><button class="review-token" onclick="pickReviewFormula(this,'Q = mL')">Q = mL<br><span class="tiny-note">สถานะเปลี่ยน</span></button></div><div class="full-cycle-box"><div class="cycle"><div class="state-box">🧊 น้ำแข็ง -20°C<small>อุณหภูมิติดลบ</small></div><div class="arrow-step"><div class="arrow">➡</div><div class="review-slot" data-ans="Q = mcΔt" data-note="c = 0.5" onclick="fillReviewSlot(this)">กดใส่สูตร</div><div class="route-note">น้ำแข็งอุ่นขึ้น</div></div><div class="state-box">🧊 น้ำแข็ง 0°C<small>ยังเป็นของแข็ง</small></div><div class="arrow-step"><div class="arrow">➡</div><div class="review-slot" data-ans="Q = mL" data-note="L = 80" onclick="fillReviewSlot(this)">กดใส่สูตร</div><div class="route-note">หลอมเหลว</div></div><div class="state-box">💧 น้ำ 0°C<small>ของเหลว</small></div><div class="arrow-step"><div class="arrow">➡</div><div class="review-slot" data-ans="Q = mcΔt" data-note="c = 1" onclick="fillReviewSlot(this)">กดใส่สูตร</div><div class="route-note">น้ำอุ่นขึ้น</div></div><div class="state-box">💧 น้ำ 100°C<small>จุดเดือด</small></div><div class="arrow-step"><div class="arrow">➡</div><div class="review-slot" data-ans="Q = mL" data-note="L = 540" onclick="fillReviewSlot(this)">กดใส่สูตร</div><div class="route-note">กลายเป็นไอ</div></div><div class="state-box">☁️ ไอน้ำ 100°C<small>แก๊ส</small></div><div class="arrow-step"><div class="arrow">➡</div><div class="review-slot" data-ans="Q = mcΔt" data-note="c = 0.48" onclick="fillReviewSlot(this)">กดใส่สูตร</div><div class="route-note">ไอน้ำร้อนขึ้น</div></div><div class="state-box">☁️ ไอน้ำ 120°C<small>ไอน้ำร้อน</small></div></div></div><div class="review-check"><button class="btn good" onclick="checkReviewCycle()">ตรวจวงจรเต็ม ✅</button><button class="btn alt" onclick="resetReviewCycle()">เริ่มใหม่ 🔁</button></div><p class="sub">เมื่อเลือกถูกทั้งหมด เด็กจะเห็นคำใบ้ค่า c หรือ L ใต้สูตรทันที เช่น <b>c = 0.5</b>, <b>L = 80</b>, <b>c = 1</b>, <b>L = 540</b>, <b>c = 0.48</b></p></div>
+    <div class="slide"><h2>7) สูตรเมื่ออุณหภูมิเปลี่ยน</h2><p class="sub">ถ้าอุณหภูมิเปลี่ยน แต่ยังไม่เปลี่ยนสถานะ ใช้</p><h1 class="formula">Q = mcΔt</h1><p class="sub">สำหรับน้ำ ค่า c = 1 จึงคิดง่ายเป็น <b>Q = mΔt</b></p><div class="mini-card"><b>ตัวอย่าง:</b> น้ำ 100 g จาก 20°C → 50°C<br>Q = 100 × 1 × (50-20) = <b>3000 cal</b></div></div>
+    <div class="slide"><h2>8) สูตรเมื่อเปลี่ยนสถานะ</h2><p class="sub">ถ้ามีการเปลี่ยนสถานะ เช่น น้ำแข็งละลาย หรือน้ำเดือดเป็นไอ ใช้</p><h1 class="formula">Q = mL</h1><div class="grid grid2"><div class="mini-card">🧊 น้ำแข็ง 0°C → น้ำ 0°C<br>L = 80<br>Q = 80m</div><div class="mini-card">☁️ น้ำ 100°C → ไอน้ำ 100°C<br>L = 540<br>Q = 540m</div></div></div>
+    <div class="slide"><h2>10) วัฏจักรสถานะ: น้ำแข็ง 0°C → น้ำ 30°C</h2><div class="cycle"><div class="state-box">🧊 น้ำแข็ง 0°C<small>ของแข็ง</small></div><div class="arrow-step"><div class="arrow">➡</div><span class="formula-chip latent">Q1 = mL<br><small>L = 80</small></span><div class="route-note">เปลี่ยนสถานะ</div></div><div class="state-box">💧 น้ำ 0°C<small>ของเหลว</small></div><div class="arrow-step"><div class="arrow">➡</div><span class="formula-chip temp">Q2 = mcΔt<br><small>c น้ำ = 1</small></span><div class="route-note">อุณหภูมิเปลี่ยน</div></div><div class="state-box">💧 น้ำ 30°C<small>ของเหลวอุ่นขึ้น</small></div></div><p class="sub">สูตรอยู่ใต้ลูกศร: ลูกศรที่เปลี่ยนสถานะใช้ <b>mL</b> | ลูกศรที่อุณหภูมิเปลี่ยนใช้ <b>mcΔt</b></p></div>
+    <div class="slide"><h2>10) วัฏจักรสถานะ: น้ำ 25°C → ไอน้ำ 100°C</h2><div class="cycle"><div class="state-box">💧 น้ำ 25°C<small>ของเหลว</small></div><div class="arrow-step"><div class="arrow">➡</div><span class="formula-chip temp">Q1 = mcΔt<br><small>Δt = 100-25</small></span><div class="route-note">อุ่นน้ำ</div></div><div class="state-box">💧 น้ำ 100°C<small>จุดเดือด</small></div><div class="arrow-step"><div class="arrow">➡</div><span class="formula-chip latent">Q2 = mL<br><small>L = 540</small></span><div class="route-note">กลายเป็นไอ</div></div><div class="state-box">☁️ ไอน้ำ 100°C<small>แก๊ส</small></div></div><p class="sub">ต้องอุ่นน้ำให้ถึง 100°C ก่อน แล้วลูกศรถัดไปจึงใช้ <b>mL</b> สำหรับการกลายเป็นไอ</p></div>
+    <div class="slide"><h2>11) เทคนิคเลือกสูตร 3 วินาที</h2><div class="grid grid2"><div class="mini-card remember">อุณหภูมิเปลี่ยนไหม?<br><b>ใช้ mcΔt</b></div><div class="mini-card remember">สถานะเปลี่ยนไหม?<br><b>ใช้ mL</b></div></div><p class="sub">ถ้าโจทย์มีหลายช่วง ให้แยกเป็น Q1, Q2, Q3 แล้วรวมทั้งหมด</p></div>
+    <div class="slide"><h2>12) ตัวอย่างหลายช่วง</h2><p class="sub">น้ำแข็ง 10 g ที่ -20°C → น้ำ 20°C</p><div class="cycle"><div class="state-box">🧊 น้ำแข็ง -20°C</div><div class="arrow-step"><div class="arrow">➡</div><span class="formula-chip temp">Q1 = mcΔt</span></div><div class="state-box">🧊 น้ำแข็ง 0°C</div><div class="arrow-step"><div class="arrow">➡</div><span class="formula-chip latent">Q2 = mL</span></div><div class="state-box">💧 น้ำ 0°C</div><div class="arrow-step"><div class="arrow">➡</div><span class="formula-chip temp">Q3 = mcΔt</span></div><div class="state-box">💧 น้ำ 20°C</div></div><table><tr><th>ช่วง</th><th>การเปลี่ยนแปลง</th><th>สูตร</th><th>ค่า Q</th></tr><tr><td>Q1</td><td>น้ำแข็ง -20→0°C</td><td>mcΔt</td><td>10×0.5×20 = 100</td></tr><tr><td>Q2</td><td>น้ำแข็ง 0°C→น้ำ 0°C</td><td>mL</td><td>10×80 = 800</td></tr><tr><td>Q3</td><td>น้ำ 0→20°C</td><td>mcΔt</td><td>10×1×20 = 200</td></tr></table><h3>รวม = 100+800+200 = 1100 cal</h3></div>
+    <div class="slide"><h2>13) ตัวอย่างน้ำ 100°C เป็นไอ</h2><p class="sub">น้ำ 20 g ที่ 30°C → ไอน้ำ 100°C</p><table><tr><th>ช่วง</th><th>สูตร</th><th>ค่า Q</th></tr><tr><td>น้ำ 30→100°C</td><td>mcΔt</td><td>20×1×70 = 1400 cal</td></tr><tr><td>น้ำ 100°C→ไอน้ำ 100°C</td><td>mL</td><td>20×540 = 10800 cal</td></tr></table><h3>รวม = 12200 cal</h3></div>
+  </div>
+  <div class="dots" id="dots"></div>
+  <div class="row" style="justify-content:center;margin-top:18px"><button class="btn alt" onclick="prevSlide()">⬅ ก่อนหน้า</button><button class="btn" onclick="nextSlide()" id="nextSlideBtn">ถัดไป ➡</button><button class="btn good hidden" id="playBtn" onclick="startGame()">เข้าสู่เกม 🎮</button></div>
+</div></div></section>
+
+<section id="game" class="screen"><div class="wrap game-card" id="gameCard"><div class="content">
+  <div class="topbar"><span class="pill" id="stagePill">ด่าน</span><span class="pill" id="scorePill">คะแนน 0</span><span class="pill" id="countPill">ข้อ 1/1</span><div class="progress"><div id="bar"></div></div></div>
+  <div id="gameArea"></div>
+</div></div></section>
+
+<section id="summary" class="screen"><div class="wrap panel"><div class="content report" id="summaryContent"></div></div></section>
+
+<script>
+const $=id=>document.getElementById(id);
+let player='นักเรียน', slide=0, score=0, total=0, stageIndex=0, qIndex=0, current=null, activeInput=null;
+let stageResults=[], stageStartScore=0, stageStartTotal=0;
+const stages=[
+ {name:'ด่าน 1 จำค่าคงที่', type:'const', pass:8, questions:[
+  {q:'ค่า C ของน้ำ เท่ากับเท่าไร?', a:'1 cal/g°C', opts:['1 cal/g°C','80 cal/g','540 cal/g','0.5 cal/g°C'], exp:'น้ำมีค่า C = 1 cal/g°C'},
+  {q:'ค่าความร้อนแฝงของการหลอมเหลวของน้ำแข็ง คือข้อใด?', a:'80 cal/g', opts:['1 cal/g°C','80 cal/g','540 cal/g','100 cal/g'], exp:'น้ำแข็ง ↔ น้ำ ใช้ Lf = 80 cal/g'},
+  {q:'ค่าความร้อนแฝงของการกลายเป็นไอของน้ำ คือข้อใด?', a:'540 cal/g', opts:['80 cal/g','100 cal/g','540 cal/g','1 cal/g°C'], exp:'น้ำ ↔ ไอน้ำ ใช้ Lv = 540 cal/g'},
+  {q:'หน่วยของมวล m ในเกมนี้คืออะไร?', a:'g', opts:['g','cal','°C','cal/g'], exp:'m คือมวล หน่วยกรัม g'},
+  {q:'หน่วยของพลังงานความร้อน Q ในเกมนี้คืออะไร?', a:'cal', opts:['cal','g','°C','cal/g°C'], exp:'Q มีหน่วยเป็น cal'},
+  {q:'น้ำแข็งละลาย ใช้ค่า L เท่าไร?', a:'80 cal/g', opts:['1 cal/g°C','80 cal/g','540 cal/g','0.5 cal/g°C'], exp:'การหลอมเหลวใช ้80 cal/g'},
+  {q:'น้ำเดือดกลายเป็นไอ ใช้ค่า L เท่าไร?', a:'540 cal/g', opts:['1 cal/g°C','80 cal/g','540 cal/g','10 cal/g'], exp:'การกลายเป็นไอใช้ 540 cal/g'},
+  {q:'ถ้าเป็นน้ำและอุณหภูมิเปลี่ยน ค่า C ที่แทนในสูตรคือ?', a:'1', opts:['1','80','540','0.5'], exp:'น้ำ = 1 จำง่ายที่สุด'},
+  {q:'หน่วยของ C คืออะไร?', a:'cal/g°C', opts:['cal/g°C','cal/g','g/cal','°C/g'], exp:'C มีหน่วย cal/g°C'},
+  {q:'หน่วยของ L คืออะไร?', a:'cal/g', opts:['cal/g','cal/g°C','g/cal','°C'], exp:'L มีหน่วย cal/g'},
+  {q:'m ในสูตร Q = mcΔt หรือ Q = mL หมายถึงอะไร?', a:'มวลของสาร', opts:['มวลของสาร','พลังงานความร้อน','ความร้อนแฝง','อุณหภูมิที่เปลี่ยนไป'], exp:'m คือมวลของสาร หน่วย g'},
+  {q:'c ในสูตร Q = mcΔt หมายถึงอะไร?', a:'ความร้อนจำเพาะ', opts:['ความร้อนจำเพาะ','ความร้อนแฝง','มวล','พลังงาน'], exp:'c คือความร้อนจำเพาะ หน่วย cal/g°C'},
+  {q:'L ในสูตร Q = mL หมายถึงอะไร?', a:'ความร้อนแฝง', opts:['ความร้อนแฝง','ความร้อนจำเพาะ','อุณหภูมิสุดท้าย','มวล'], exp:'L คือความร้อนแฝง หน่วย cal/g'},
+  {q:'Δt หมายถึงอะไร?', a:'อุณหภูมิที่เปลี่ยนไป', opts:['อุณหภูมิที่เปลี่ยนไป','ความร้อนแฝง','มวลของสาร','พลังงานรวม'], exp:'Δt = อุณหภูมิสุดท้าย - อุณหภูมิเริ่มต้น'}
+ ]},
+ {name:'ด่าน 2 เลือกสูตรให้ตรง', type:'formula', pass:8, questions:[
+  {q:'น้ำ 50 g จาก 20°C → 60°C ควรใช้สูตรใด?', a:'Q = mcΔt', opts:['Q = mcΔt','Q = mL'], exp:'อุณหภูมิเปลี่ยน 20→60 จึงใช้ mcΔt'},
+  {q:'น้ำแข็ง 30 g ละลายเป็นน้ำที่ 0°C ควรใช้สูตรใด?', a:'Q = mL', opts:['Q = mcΔt','Q = mL'], exp:'เปลี่ยนสถานะจากของแข็งเป็นของเหลว ใช้ mL'},
+  {q:'น้ำ 10 g ที่ 100°C กลายเป็นไอน้ำ 100°C ควรใช้สูตรใด?', a:'Q = mL', opts:['Q = mcΔt','Q = mL'], exp:'เปลี่ยนสถานะ แต่ T คงที่ ใช้ mL'},
+  {q:'น้ำ 80 g เย็นลงจาก 90°C → 30°C ควรใช้สูตรใด?', a:'Q = mcΔt', opts:['Q = mcΔt','Q = mL'], exp:'อุณหภูมิเปลี่ยน ใช้ mcΔt'},
+  {q:'ไอน้ำควบแน่นเป็นน้ำที่ 100°C ควรใช้สูตรใด?', a:'Q = mL', opts:['Q = mcΔt','Q = mL'], exp:'ไอเป็นน้ำ คือเปลี่ยนสถานะ ใช้ mL'},
+  {q:'น้ำ 0°C อุ่นขึ้นเป็นน้ำ 25°C ควรใช้สูตรใด?', a:'Q = mcΔt', opts:['Q = mcΔt','Q = mL'], exp:'เป็นน้ำเหมือนเดิม แต่อุณหภูมิเปลี่ยน ใช้ mcΔt'},
+  {q:'น้ำแข็ง 0°C แข็งตัวจากน้ำ 0°C ควรใช้สูตรใด?', a:'Q = mL', opts:['Q = mcΔt','Q = mL'], exp:'น้ำเป็นน้ำแข็ง คือเปลี่ยนสถานะ ใช้ mL'},
+  {q:'น้ำ 100°C เดือดเป็นไอจนหมด ควรใช้สูตรใด?', a:'Q = mL', opts:['Q = mcΔt','Q = mL'], exp:'น้ำเป็นไอ ใช้ mL'},
+  {q:'น้ำ 25°C → น้ำ 100°C ยังไม่เดือดเป็นไอ ควรใช้สูตรใด?', a:'Q = mcΔt', opts:['Q = mcΔt','Q = mL'], exp:'ยังเป็นน้ำ แค่ T เปลี่ยน ใช้ mcΔt'},
+  {q:'น้ำแข็ง -10°C → น้ำแข็ง 0°C ควรใช้สูตรใด?', a:'Q = mcΔt', opts:['Q = mcΔt','Q = mL'], exp:'ยังเป็นน้ำแข็ง แค่ T เปลี่ยน ใช้ mcΔt'},
+  {q:'น้ำแข็ง 0°C → น้ำ 0°C ในวัฏจักร ใช้สูตรใด?', a:'Q = mL', opts:['Q = mcΔt','Q = mL'], exp:'เปลี่ยนสถานะที่ 0°C ใช้ mL'},
+  {q:'น้ำ 0°C → น้ำ 30°C ในวัฏจักร ใช้สูตรใด?', a:'Q = mcΔt', opts:['Q = mcΔt','Q = mL'], exp:'ยังเป็นน้ำ แต่อุณหภูมิเพิ่ม ใช้ mcΔt'},
+  {q:'น้ำ 25°C → น้ำ 100°C ในวัฏจักร ใช้สูตรใด?', a:'Q = mcΔt', opts:['Q = mcΔt','Q = mL'], exp:'น้ำเหมือนเดิม แต่อุณหภูมิเพิ่ม ใช้ mcΔt'},
+  {q:'น้ำ 100°C → ไอน้ำ 100°C ในวัฏจักร ใช้สูตรใด?', a:'Q = mL', opts:['Q = mcΔt','Q = mL'], exp:'เปลี่ยนสถานะจากน้ำเป็นไอน้ำ ใช้ mL'}
+ ]},
+ {name:'ด่าน 3 คำนวณช่วงเดียว', type:'calc', pass:5, questions:[
+  {q:'น้ำ 100 g จาก 20°C → 50°C', formula:'Q = mcΔt', ans:3000, exp:'Q = 100×1×(50-20) = 3000 cal'},
+  {q:'น้ำ 200 g จาก 10°C → 40°C', formula:'Q = mcΔt', ans:6000, exp:'Q = 200×1×30 = 6000 cal'},
+  {q:'น้ำแข็ง 50 g ละลายหมดที่ 0°C', formula:'Q = mL', ans:4000, exp:'Q = 50×80 = 4000 cal'},
+  {q:'น้ำ 10 g ที่ 100°C กลายเป็นไอน้ำ 100°C', formula:'Q = mL', ans:5400, exp:'Q = 10×540 = 5400 cal'},
+  {q:'น้ำ 80 g จาก 25°C → 75°C', formula:'Q = mcΔt', ans:4000, exp:'Q = 80×1×50 = 4000 cal'},
+  {q:'น้ำแข็ง 25 g ละลายหมด', formula:'Q = mL', ans:2000, exp:'Q = 25×80 = 2000 cal'}
+ ]},
+ {name:'ด่าน 4 เลือกวงจรใหญ่ + คำนวณ Q รวม', type:'multi', pass:3, questions:[
+  {q:'น้ำแข็ง 10 g ที่ -20°C ได้รับความร้อนจนเป็นน้ำ 20°C', routes:[
+    'น้ำแข็ง -20°C → น้ำแข็ง 0°C → น้ำ 0°C → น้ำ 20°C',
+    'น้ำแข็ง -20°C → น้ำ 0°C → น้ำแข็ง 0°C → น้ำ 20°C',
+    'น้ำแข็ง 0°C → น้ำ 20°C → น้ำแข็ง -20°C',
+    'น้ำแข็ง -20°C → น้ำ 20°C → ไอน้ำ 100°C'], correctRoute:0, phases:[
+    {name:'Q1 น้ำแข็ง -20°C → น้ำแข็ง 0°C', formula:'Q = mcΔt', ans:100, exp:'10×0.5×20 = 100'},
+    {name:'Q2 น้ำแข็ง 0°C → น้ำ 0°C', formula:'Q = mL', ans:800, exp:'10×80 = 800'},
+    {name:'Q3 น้ำ 0°C → น้ำ 20°C', formula:'Q = mcΔt', ans:200, exp:'10×1×20 = 200'}], total:1100},
+  {q:'น้ำ 20 g ที่ 30°C ได้รับความร้อนจนเป็นไอน้ำ 100°C', routes:[
+    'น้ำ 30°C → น้ำ 100°C → ไอน้ำ 100°C',
+    'น้ำ 30°C → ไอน้ำ 30°C → ไอน้ำ 100°C',
+    'น้ำ 30°C → น้ำแข็ง 0°C → ไอน้ำ 100°C',
+    'น้ำ 100°C → น้ำ 30°C → ไอน้ำ 100°C'], correctRoute:0, phases:[
+    {name:'Q1 น้ำ 30°C → น้ำ 100°C', formula:'Q = mcΔt', ans:1400, exp:'20×1×70 = 1400'},
+    {name:'Q2 น้ำ 100°C → ไอน้ำ 100°C', formula:'Q = mL', ans:10800, exp:'20×540 = 10800'}], total:12200},
+  {q:'น้ำแข็ง 5 g ที่ 0°C ได้รับความร้อนจนเป็นไอน้ำ 100°C', routes:[
+    'น้ำแข็ง 0°C → น้ำ 0°C → น้ำ 100°C → ไอน้ำ 100°C',
+    'น้ำแข็ง 0°C → น้ำ 100°C → น้ำ 0°C → ไอน้ำ 100°C',
+    'น้ำแข็ง 0°C → ไอน้ำ 100°C → น้ำ 100°C',
+    'น้ำ 0°C → น้ำแข็ง 0°C → ไอน้ำ 100°C'], correctRoute:0, phases:[
+    {name:'Q1 น้ำแข็ง 0°C → น้ำ 0°C', formula:'Q = mL', ans:400, exp:'5×80 = 400'},
+    {name:'Q2 น้ำ 0°C → น้ำ 100°C', formula:'Q = mcΔt', ans:500, exp:'5×1×100 = 500'},
+    {name:'Q3 น้ำ 100°C → ไอน้ำ 100°C', formula:'Q = mL', ans:2700, exp:'5×540 = 2700'}], total:3600},
+  {q:'ไอน้ำ 10 g ที่ 100°C คายความร้อนจนเป็นน้ำ 40°C', routes:[
+    'ไอน้ำ 100°C → น้ำ 100°C → น้ำ 40°C',
+    'ไอน้ำ 100°C → น้ำ 40°C → น้ำ 100°C',
+    'ไอน้ำ 100°C → น้ำแข็ง 0°C → น้ำ 40°C',
+    'น้ำ 100°C → ไอน้ำ 100°C → น้ำ 40°C'], correctRoute:0, phases:[
+    {name:'Q1 ไอน้ำ 100°C → น้ำ 100°C', formula:'Q = mL', ans:5400, exp:'10×540 = 5400'},
+    {name:'Q2 น้ำ 100°C → น้ำ 40°C', formula:'Q = mcΔt', ans:600, exp:'10×1×60 = 600'}], total:6000}
+ ]}
+];
+const allQuestions=stages.reduce((a,s)=>a+s.questions.length,0);
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));$(id).classList.add('active')}
+function startReview(){player=$('playerName').value.trim()||'นักเรียน'; beep('click'); show('review'); renderDots();}
+
+let selectedReviewFormula=null;
+function pickReviewFormula(btn,f){selectedReviewFormula=f;document.querySelectorAll('.review-token').forEach(b=>b.classList.remove('selected'));btn.classList.add('selected');beep('click')}
+function fillReviewSlot(slot){if(!selectedReviewFormula){toast('เลือกสูตรด้านบนก่อนจ้า 🌡️');return}slot.dataset.pick=selectedReviewFormula;slot.innerHTML=selectedReviewFormula+'<br><span class="tiny-note">รอตรวจ</span>';slot.classList.add('filled');slot.classList.remove('correct','wrong');beep('click')}
+function checkReviewCycle(){let slots=[...document.querySelectorAll('.review-slot')];let ok=true;slots.forEach(sl=>{let good=sl.dataset.pick===sl.dataset.ans;sl.classList.remove('correct','wrong');sl.classList.add(good?'correct':'wrong');if(good){sl.innerHTML='✅ '+sl.dataset.ans+'<br><span class="tiny-note">'+sl.dataset.note+'</span>'}else{ok=false;sl.innerHTML=(sl.dataset.pick||'ยังไม่เลือก')+'<br><span class="tiny-note">ลองดูใหม่</span>'}});toast(ok?'วงจรเต็มเป๊ะมาก! 🎉':'ยังมีบางลูกศรผิดจ้า 😅');beep(ok?'correct':'wrong');if(ok)spark()}
+function resetReviewCycle(){selectedReviewFormula=null;document.querySelectorAll('.review-token').forEach(b=>b.classList.remove('selected'));document.querySelectorAll('.review-slot').forEach(sl=>{delete sl.dataset.pick;sl.className='review-slot';sl.innerHTML='กดใส่สูตร'});beep('click')}
+function goStart(){show('start')}
+function renderDots(){let ds=$('dots');ds.innerHTML='';document.querySelectorAll('.slide').forEach((_,i)=>{let d=document.createElement('span');d.className='dot '+(i===slide?'on':'');ds.appendChild(d)});$('playBtn').classList.toggle('hidden',slide!==document.querySelectorAll('.slide').length-1);$('nextSlideBtn').classList.toggle('hidden',slide===document.querySelectorAll('.slide').length-1)}
+function setSlide(n){let slides=[...document.querySelectorAll('.slide')];slides[slide].classList.remove('active');slide=Math.max(0,Math.min(slides.length-1,n));slides[slide].classList.add('active');renderDots();beep('click')}
+function nextSlide(){setSlide(slide+1)}function prevSlide(){setSlide(slide-1)}
+function startGame(){score=0; total=0; stageResults=stages.map(()=>null); show('game'); renderStageMenu(); beep('level')}
+function shuffle(arr){return arr.map(v=>[Math.random(),v]).sort((a,b)=>a[0]-b[0]).map(x=>x[1])}
+function shuffleStages(){stages.forEach(s=>s.questions=shuffle(s.questions))}
+function renderStageMenu(){
+  $('stagePill').textContent='เลือกด่าน'; $('scorePill').textContent='คะแนนรวม '+score; $('countPill').textContent='เล่นด่านไหนก่อนก็ได้'; $('bar').style.width='0%';
+  let done=stageResults.filter(Boolean).length;
+  let cards=stages.map((s,i)=>{let r=stageResults[i];let status=r?`<span class="stage-status ${r.pass?'pass':'fail'}">${r.pass?'PASS':'NO PASS'} ${r.score}/${r.total}</span>`:'<span class="stage-status">ยังไม่เล่น</span>';let desc=s.type==='multi'?'เลือกวงจรก่อน → เปิดวงจรใหญ่ → เติมสูตรและค่า Q ใต้ลูกศร':s.type==='calc'?'เลือกสูตรก่อน → เติมค่าตัวแปร → ตอบ Q':s.type==='formula'?'ฝึกเลือก mcΔt หรือ mL ให้ตรงสถานการณ์':'จำค่า C น้ำ, Lf, Lv และความหมายตัวแปร';return `<button class="stage-card" onclick="startStage(${i})"><h3>${s.name}</h3><p>${desc}</p>${status}</button>`}).join('');
+  $('gameArea').innerHTML=`<div class="question">เลือกด่านที่อยากเล่นได้เลย 🎮</div><p class="sub">ไม่ต้องเล่นเรียงด่าน เด็กเลือกฝึกเฉพาะจุดที่ยังไม่คล่องได้ทันที</p><div class="stage-menu">${cards}</div><div class="row" style="justify-content:center;margin-top:18px"><button class="btn good" onclick="showSummary()">ดูรายงานผล 📄</button><button class="btn alt" onclick="show('review')">กลับไปทบทวน 📘</button></div>`;
+}
+function startStage(i){stageIndex=i; qIndex=0; stages[i].questions=shuffle(stages[i].questions); stageStartScore=score; stageStartTotal=total; show('game'); renderQuestion(); beep('level')}
+function renderHeader(){const st=stages[stageIndex];$('stagePill').textContent=st.name;$('scorePill').textContent='คะแนนรวม '+score;$('countPill').textContent='ข้อ '+(qIndex+1)+'/'+st.questions.length;let pct=(qIndex/st.questions.length)*100;$('bar').style.width=pct+'%'}
+function renderQuestion(){renderHeader();current=stages[stageIndex].questions[qIndex];let st=stages[stageIndex];let area=$('gameArea');activeInput=null; if(st.type==='const'||st.type==='formula') renderChoice(area,current); if(st.type==='calc') renderCalc(area,current); if(st.type==='multi') renderMulti(area,current);} 
+function renderChoice(area,q){let opts=shuffle(q.opts);area.innerHTML=`<div class="question">${q.q}</div><div class="options">${opts.map(o=>`<button class="option" onclick="choiceAnswer(this,'${esc(o)}')">${o}</button>`).join('')}</div>`}
+function esc(s){return String(s).replace(/'/g,"&#39;").replace(/"/g,'&quot;')}
+function choiceAnswer(btn,val){document.querySelectorAll('.option').forEach(b=>b.disabled=true);let ok=val===current.a;btn.classList.add(ok?'correct':'wrong'); if(!ok){[...document.querySelectorAll('.option')].find(b=>b.textContent.trim()===current.a)?.classList.add('correct')} finishItem(ok,current.exp)}
+function getFactors(item){let text=(item.exp||'').replace(/cal/g,'').replace(/Q\s*=\s*/,'');let left=text.split('=').slice(0,-1).join('=').trim()||text.split('=')[0].trim();let parts=left.split('×').map(x=>x.trim()).filter(Boolean);function val(x){x=x.replace(/[()]/g,'').trim();if(x.includes('-')){let a=x.split('-').map(Number);return Math.abs(a[0]-a[1])}return Number(x)}return parts.map(val)}
+function factorLabels(formula){return formula.includes('mc')?['m','c','Δt']:['m','L']}
+function varInputsHTML(prefix,item){let labels=factorLabels(item.formula), vals=getFactors(item);let cls=labels.length===2?' two':'';let boxes=labels.map((lab,i)=>`<div class="varbox"><b>${lab}</b><small>${lab==='m'?'มวล (g)':lab==='c'?'ความร้อนจำเพาะ':'Δt'===lab?'อุณหภูมิที่เปลี่ยน (°C)':'ความร้อนแฝง (cal/g)'}</small><input readonly onclick="activeInput=this;updateSubLine('${prefix}')" oninput="updateSubLine('${prefix}')" id="${prefix}var${i}" placeholder="${lab}"></div>`).join('');let mult=labels.map((lab,i)=>`<span id="${prefix}show${i}">${lab}</span>`).join(' × ');return `<div class="var-fill${cls}">${boxes}</div><div class="subline">แทนค่า: Q = ${mult}</div><div class="calc-result-row">ดังนั้น Q = <input readonly onclick="activeInput=this" id="${prefix}Ans" placeholder="cal"> cal</div>`}
+function updateSubLine(prefix){let labels=[...document.querySelectorAll(`[id^="${prefix}show"]`)];labels.forEach((sp,i)=>{let inp=$(prefix+'var'+i);if(inp&&inp.value)sp.textContent=inp.value})}
+function varsCorrect(prefix,item){let vals=getFactors(item);for(let i=0;i<vals.length;i++){let inp=$(prefix+'var'+i);if(!inp||Number(inp.value)!==vals[i])return false}let ans=$(prefix+'Ans');return ans&&Number(ans.value)===item.ans}
+function renderCalc(area,q){area.innerHTML=`<div class="question">${q.q}</div><div class="mini-card"><b>ขั้นที่ 1:</b> เลือกสูตรให้ถูกก่อน</div><div class="options"><button class="option" onclick="calcFormula(this,'Q = mcΔt')">Q = mcΔt</button><button class="option" onclick="calcFormula(this,'Q = mL')">Q = mL</button></div><div id="calcPart" class="hidden mini-card" style="margin-top:14px;text-align:center"><h3>ขั้นที่ 2: เติมค่าตัวแปรใต้สูตร</h3><p class="sub">เติมค่าให้ตรงกับ m, c, Δt หรือ L ก่อน แล้วจึงตอบค่า Q</p>${varInputsHTML('calc',q)}<div class="keypad">${keypadHtml()}</div><button class="btn good" onclick="checkCalc()">ตรวจคำตอบ ✅</button></div>`}
+function calcFormula(btn,f){document.querySelectorAll('.option').forEach(b=>b.disabled=true);let ok=f===current.formula;btn.classList.add(ok?'correct':'wrong'); if(ok){$('calcPart').classList.remove('hidden');activeInput=$('calcvar0');beep('correct');spark()}else{[...document.querySelectorAll('.option')].find(b=>b.textContent.trim()===current.formula)?.classList.add('correct');finishItem(false,'ต้องใช้ '+current.formula+' เพราะ '+current.exp)}}
+function checkCalc(){finishItem(varsCorrect('calc',current),current.exp)}
+function keypadHtml(){return ['1','2','3','4','5','6','7','8','9','0','00','.','⌫','C'].map(k=>`<button onclick="key('${k}')">${k}</button>`).join('')}
+function key(k){beep('click'); if(!activeInput)return; if(k==='C')activeInput.value=''; else if(k==='⌫')activeInput.value=activeInput.value.slice(0,-1); else activeInput.value+=k; let id=activeInput.id||''; let prefix=id.replace(/(var\d+|Ans)$/,''); if(prefix)updateSubLine(prefix)}
+function renderSeq(area,q){let items=shuffle([...q.seq,...q.distract]).map((name,i)=>({name, id:i}));area.innerHTML=`<div class="question">${q.q}</div><p class="sub">กด ⬆ ⬇ เพื่อเรียงลำดับให้ถูก แล้วกดตรวจ</p><div class="seq-area" id="seqArea">${items.map((it,i)=>seqItem(it.name,i)).join('')}</div><div class="row" style="justify-content:center;margin-top:14px"><button class="btn good" onclick="checkSeq()">ตรวจลำดับ ✅</button></div>`}
+function seqItem(name,i){return `<div class="seq-item" data-name="${esc(name)}"><span>${name}</span><span class="seq-controls"><button class="btn small alt" onclick="moveSeq(${i},-1)">⬆</button><button class="btn small alt" onclick="moveSeq(${i},1)">⬇</button></span></div>`}
+function moveSeq(i,dir){let area=$('seqArea');let nodes=[...area.children];let j=i+dir;if(j<0||j>=nodes.length)return; if(dir<0)area.insertBefore(nodes[i],nodes[j]);else area.insertBefore(nodes[j],nodes[i]);[...area.children].forEach((n,idx)=>{n.querySelector('.seq-controls').innerHTML=`<button class="btn small alt" onclick="moveSeq(${idx},-1)">⬆</button><button class="btn small alt" onclick="moveSeq(${idx},1)">⬇</button>`});beep('click')}
+function checkSeq(){let names=[...$('seqArea').children].map(n=>n.dataset.name);let ok=names.slice(0,current.seq.length).every((n,i)=>n===current.seq[i]) && names.length>=current.seq.length; finishItem(ok,current.exp)}
+function cleanStateName(txt){return txt.replace(/^Q\d+\s*/,'').trim()}
+function routeDiagram(phases){
+  let states=[]; phases.forEach((p,i)=>{let pair=cleanStateName(p.name).split('→').map(x=>x.trim()); if(i===0)states.push(pair[0]); states.push(pair[1]||'ปลายทาง')});
+  let html='<div class="route-preview big-circuit"><div class="cycle">';
+  states.forEach((st,i)=>{html+=`<div class="state-box">${st}</div>`; if(i<phases.length){html+=`<div class="arrow-step"><div class="arrow">➡</div><button class="formula-chip wait" id="routeFormula${i}" onclick="showFormulaPopup(${i})">Q${i+1}<br>กดเลือกสูตร</button><div id="inlineCalc${i}" class="tiny-form hidden">${varInputsHTML('multi'+i,phases[i])}</div><div class="route-note">ช่วง Q${i+1}</div></div>`}});
+  return html+'</div></div>'
+}
+function renderRouteChoices(q){
+  let pairs=q.routes.map((r,i)=>({r,i})); pairs=shuffle(pairs);
+  return `<div class="question">${q.q}</div><p class="sub">ขั้นแรก เลือกเส้นทางการเปลี่ยนแปลงที่ถูกต้องก่อน แล้วระบบจะเปิดวงจรคำนวณให้</p><div class="route-options">${pairs.map(x=>`<button class="route-option" onclick="chooseRoute(this,${x.i})">${x.r.replaceAll('→','<br>➡ ')}</button>`).join('')}</div>`
+}
+function renderMulti(area,q){ q.routeChosen=false; area.innerHTML=renderRouteChoices(q) }
+function chooseRoute(btn,idx){
+  document.querySelectorAll('.route-option').forEach(b=>b.disabled=true);
+  let ok=idx===current.correctRoute;
+  btn.classList.add(ok?'correct':'wrong');
+  if(!ok){toast('ลำดับยังไม่ถูกจ้า 😅\nดูสถานะต้นทางและปลายทางก่อน');beep('wrong');setTimeout(()=>renderMulti($('gameArea'),current),1300);return}
+  toast('เส้นทางถูกต้อง! 🚀\nไปเติมสูตรใต้ลูกศรเลย');beep('correct');spark();setTimeout(renderMultiCircuit,700);
+}
+function renderMultiCircuit(){
+  let q=current, area=$('gameArea');
+  area.innerHTML=`<div class="question">${q.q}</div><p class="sub">วงจรใหญ่เปิดแล้ว ✅ กดปุ่ม Q ใต้ลูกศรเพื่อเลือกสูตร แล้วเติมตัวเลขที่คูณกันให้ครบในวงจรนั้นเลย</p>${routeDiagram(q.phases)}<div class="sumline">Qรวม = <input class="answer" readonly onclick="activeInput=this" id="totalAns" placeholder="รวมทั้งหมด"> cal</div><div class="keypad">${keypadHtml()}</div><div class="row" style="justify-content:center"><button class="btn good" onclick="checkMulti()">ตรวจภารกิจสุดท้าย ✅</button></div>`;
+}
+function showFormulaPopup(i){
+  let pop=document.createElement('div');pop.className='formula-popup';pop.id='formulaPopup';
+  pop.innerHTML=`<div class="formula-popup-card"><h2>เลือกสูตรของ Q${i+1}</h2><p class="sub">ดูว่าลูกศรนี้เปลี่ยนอุณหภูมิ หรือเปลี่ยนสถานะ</p><div class="options"><button class="option" onclick="chooseFormula(${i},'Q = mcΔt')">Q = mcΔt<br><small>อุณหภูมิเปลี่ยน</small></button><button class="option" onclick="chooseFormula(${i},'Q = mL')">Q = mL<br><small>สถานะเปลี่ยน</small></button></div><div style="height:10px"></div><button class="btn small bad" onclick="closeFormulaPopup()">ปิด</button></div>`;
+  document.body.appendChild(pop);beep('click')
+}
+function closeFormulaPopup(){let p=$('formulaPopup'); if(p)p.remove()}
+function chooseFormula(i,f){
+  let p=current.phases[i]; closeFormulaPopup(); let chip=$('routeFormula'+i);
+  if(f!==p.formula){toast('ยังไม่ใช่จ้า 😅\nช่วงนี้ต้องใช้ '+p.formula);beep('wrong'); if(chip){chip.classList.add('no'); setTimeout(()=>chip.classList.remove('no'),500)} return}
+  if(chip){chip.innerHTML=`Q${i+1} = ${p.formula.replace('Q = ','')}`; chip.classList.remove('wait'); chip.classList.add(p.formula.includes('mc')?'temp':'latent'); chip.onclick=null}
+  let box=$('inlineCalc'+i); if(box)box.classList.remove('hidden'); activeInput=$('multi'+i+'var0'); beep('correct'); spark();
+}
+function checkMulti(){
+  let ok=true; current.phases.forEach((p,i)=>{if(!varsCorrect('multi'+i,p)) ok=false});
+  if(Number($('totalAns').value)!==current.total) ok=false;
+  let exp=current.phases.map((p,i)=>`Q${i+1}: ${p.exp}`).join(' | ')+` | Qรวม = ${current.total} cal`;
+  finishItem(ok,exp)
+}
+function shouldHoldExplanation(){
+  let st=stages[stageIndex];
+  return st && (st.type==='calc' || st.type==='multi');
+}
+function showLearnPopup(exp){
+  let old=$('learnOverlay'); if(old)old.remove();
+  let box=document.createElement('div'); box.className='learn-overlay'; box.id='learnOverlay';
+  let st=stages[stageIndex];
+  let title=st&&st.type==='multi'?'อ่านเฉลยวงจรให้เข้าใจก่อนนะ 🧊➡️💧':'อ่านเฉลยก่อนข้อต่อไปนะ 🌡️';
+  box.innerHTML=`<div class="learn-card"><h2>${title}</h2><p class="sub">คำตอบยังไม่ถูกจ้า ลองดูว่าผิดที่ <b>เลือกสูตร</b>, <b>แทนค่าตัวแปร</b> หรือ <b>รวม Q</b></p><div class="learn-exp">${String(exp).replace(/\|/g,'<br>').replace(/\n/g,'<br>')}</div><span class="learn-tip">💡 เข้าใจเฉลยแล้ว ค่อยไปข้อถัดไป จะจำได้ดีกว่า</span><div style="height:16px"></div><button class="btn good" onclick="closeLearnAndNext()">เข้าใจแล้ว ไปข้อถัดไป ➡</button></div>`;
+  document.body.appendChild(box);
+}
+function closeLearnAndNext(){let box=$('learnOverlay'); if(box)box.remove(); nextItem()}
+function finishItem(ok,exp){
+  total++;
+  if(ok){
+    score++; toast(randomGood());beep('correct');spark();$('gameCard').classList.add('glow');setTimeout(()=>$('gameCard').classList.remove('glow'),800); setTimeout(nextItem,1250);
+  }else{
+    beep('wrong');$('gameCard').classList.add('shake');setTimeout(()=>$('gameCard').classList.remove('shake'),360);
+    if(shouldHoldExplanation()){showLearnPopup(exp)}
+    else{toast('ยังไม่ใช่จ้า 😅\n'+exp); setTimeout(nextItem,1250)}
+  }
+}
+function nextItem(){
+  qIndex++;
+  if(qIndex>=stages[stageIndex].questions.length){
+    let st=stages[stageIndex];
+    let got=score-stageStartScore, played=total-stageStartTotal;
+    let pass=played>0 && got>=st.pass;
+    stageResults[stageIndex]={score:got,total:played,pass};
+    toast((pass?'PASS 🎉':'NO PASS 😅')+'\nกลับไปเลือกด่านได้เลย');
+    beep(pass?'level':'wrong');
+    setTimeout(renderStageMenu,1200);
+    return;
+  }
+  renderQuestion();
+}
+function randomGood(){return shuffle(['ว้าว เทพแห่งพลังงาน! 🔥','เก่งมาก จับสูตรอยู่หมัด! 🧊','เริ่ดจริงกระดิ่งเทอร์โมมิเตอร์! 🌡️','สุดยอด Q = เป๊ะ! ⚡'])[0]}
+function showSummary(){show('summary');$('bar').style.width='100%';let percent=total?Math.round(score/total*100):0;let pass=total>0&&percent>=80; if(pass)confetti(); let stageList=stages.map((s,i)=>{let r=stageResults[i];return `<tr><td>${s.name}</td><td>${r?(r.pass?'PASS':'NO PASS'):'ยังไม่เล่น'}</td><td>${r?`${r.score}/${r.total}`:'-'}</td></tr>`}).join('');let html=`<span class="tag">📄 รายงานผล Kru Pai Classroom</span><h1>${pass?'ผ่านภารกิจ 🎉':'ฝึกอีกนิด พิชิตได้แน่ 💪'}</h1><h2>ชื่อผู้เล่น: ${player}</h2><div class="grid grid3"><div class="mini-card remember">คะแนนรวม<br><b>${score}/${total}</b></div><div class="mini-card remember">เปอร์เซ็นต์<br><b>${percent}%</b></div><div class="mini-card remember">เกณฑ์ผ่าน<br><b>80%</b></div></div><h3>สถานะแต่ละด่าน</h3><table><tr><th>ด่าน</th><th>สถานะ</th><th>คะแนน</th></tr>${stageList}</table><h3>สิ่งที่เกมนี้ฝึก</h3><span class="badge">รู้ความหมาย Q m c L Δt</span><span class="badge">จำ c น้ำแข็ง = 0.5</span><span class="badge">จำ c น้ำ = 1</span><span class="badge">จำ c ไอน้ำ = 0.48</span><span class="badge">จำ Lf = 80</span><span class="badge">จำ Lv = 540</span><span class="badge">อ่านวัฏจักรลูกศร</span><span class="badge">คำนวณ Q1 Q2 Q3</span><p class="sub">สูตรจำเร็ว: น้ำร้อนขึ้น/เย็นลงใช้ <b>Q = mcΔt</b> และถ้าเป็นน้ำใช้ <b>Q = mΔt</b> | เปลี่ยนสถานะใช้ <b>Q = mL</b></p><div class="row" style="justify-content:center"><button class="btn" onclick="startGame()">เริ่มชุดใหม่ 🔁</button><button class="btn alt" onclick="show('review')">กลับไปทบทวน 📘</button></div>`;$('summaryContent').innerHTML=html;if(total)saveHistory(percent)}
+function saveHistory(percent){let key='energyPhaseHistory';let h=JSON.parse(localStorage.getItem(key)||'[]');h.unshift({name:player,score,total,percent,date:new Date().toLocaleString('th-TH')});h=h.slice(0,10);localStorage.setItem(key,JSON.stringify(h));}
+function toast(msg){let t=$('toast');t.innerHTML=String(msg).replace(/\n/g,'<br>');t.classList.remove('show');void t.offsetWidth;t.classList.add('show')}
+function spark(){for(let i=0;i<16;i++){let s=document.createElement('div');s.className='spark';s.textContent=shuffle(['✨','🔥','🧊','💧','⚡','🌡️'])[0];s.style.left='50%';s.style.top='50%';s.style.setProperty('--x',(Math.random()*520-260)+'px');s.style.setProperty('--y',(Math.random()*360-180)+'px');document.body.appendChild(s);setTimeout(()=>s.remove(),1000)}}
+function confetti(){let c=$('confetti');c.innerHTML='';for(let i=0;i<90;i++){let s=document.createElement('span');s.textContent=shuffle(['🎉','✨','🔥','🧊','💧','⭐'])[0];s.style.left=Math.random()*100+'vw';s.style.animationDelay=Math.random()*1.2+'s';c.appendChild(s)}setTimeout(()=>c.innerHTML='',3200)}
+let audioCtx=null;function beep(type){try{audioCtx=audioCtx||new (window.AudioContext||window.webkitAudioContext)();let o=audioCtx.createOscillator(),g=audioCtx.createGain();o.connect(g);g.connect(audioCtx.destination);let now=audioCtx.currentTime;let freq={click:520,correct:880,wrong:160,level:660}[type]||440;o.frequency.setValueAtTime(freq,now);if(type==='correct')o.frequency.exponentialRampToValueAtTime(1320,now+.12);if(type==='wrong')o.frequency.exponentialRampToValueAtTime(90,now+.18);if(type==='level')o.frequency.exponentialRampToValueAtTime(990,now+.22);g.gain.setValueAtTime(.0001,now);g.gain.exponentialRampToValueAtTime(.18,now+.02);g.gain.exponentialRampToValueAtTime(.0001,now+(type==='level'?.28:.16));o.start(now);o.stop(now+(type==='level'?.3:.18))}catch(e){}}
+renderDots();
+</script>
+</body>
+</html>
